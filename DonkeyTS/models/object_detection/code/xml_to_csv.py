@@ -33,16 +33,32 @@ def xml_to_csv(path):
         root = tree.getroot()
         for member in root.findall("object"):
             classes_names.append(member[0].text)
-            value = (
-                root.find("filename").text,
-                int(root.find("size")[0].text),
-                int(root.find("size")[1].text),
-                member[0].text,
-                int(member[4][0].text),
-                int(member[4][1].text),
-                int(member[4][2].text),
-                int(member[4][3].text),
-            )
+            // annotation tool, labelImg or cvat
+            print(member[1].tag)
+            if member[1].tag == 'bndbox':
+                // case of cvat
+                value = (
+                    root.find("filename").text,
+                    int(root.find("size")[0].text),
+                    int(root.find("size")[1].text),
+                    member[0].text,
+                    int(float(member[1][0].text)),
+                    int(float(member[1][1].text)),
+                    int(float(member[1][2].text)),
+                    int(float(member[1][3].text)),
+                )
+            else:
+                // case of labelImg
+                value = (
+                    root.find("filename").text,
+                    int(root.find("size")[0].text),
+                    int(root.find("size")[1].text),
+                    member[0].text,
+                    int(member[4][0].text),
+                    int(member[4][1].text),
+                    int(member[4][2].text),
+                    int(member[4][3].text),
+                )
             xml_list.append(value)
     column_name = [
         "filename",
