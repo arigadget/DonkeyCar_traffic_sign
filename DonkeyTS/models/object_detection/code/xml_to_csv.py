@@ -33,7 +33,7 @@ def xml_to_csv(path):
         root = tree.getroot()
         for member in root.findall("object"):
             classes_names.append(member[0].text)
-            print(member[1].tag)
+            #print(member[1].tag)
             if member[1].tag == 'bndbox':
                 value = (
                     root.find("filename").text,
