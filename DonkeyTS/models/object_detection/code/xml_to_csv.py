@@ -33,10 +33,8 @@ def xml_to_csv(path):
         root = tree.getroot()
         for member in root.findall("object"):
             classes_names.append(member[0].text)
-            // annotation tool, labelImg or cvat
             print(member[1].tag)
             if member[1].tag == 'bndbox':
-                // case of cvat
                 value = (
                     root.find("filename").text,
                     int(root.find("size")[0].text),
@@ -48,7 +46,6 @@ def xml_to_csv(path):
                     int(float(member[1][3].text)),
                 )
             else:
-                // case of labelImg
                 value = (
                     root.find("filename").text,
                     int(root.find("size")[0].text),
